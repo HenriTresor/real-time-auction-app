@@ -1,15 +1,20 @@
 {
   "name": "client",
+  "proxy":"http://localhost:8080/api/v1",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.16",
+    "buffer": "^6.0.3",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-router-dom": "^6.10.0",
     "socket.io-client": "^4.6.1"
   },
   "devDependencies": {
