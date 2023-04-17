@@ -18,6 +18,8 @@ const AvailableAuctions = () => {
             </Container>
         )
     }
+
+
   return (
       <Box className='body'>
           <Breadcrump>
@@ -34,6 +36,11 @@ const AvailableAuctions = () => {
 
           <Container>
     
+              {
+                  allAuctions?.length === 0 && (
+                      <h3>no auctions found</h3>
+                  )
+              }
               {
                   allAuctions?.map(auction => {
                       return (

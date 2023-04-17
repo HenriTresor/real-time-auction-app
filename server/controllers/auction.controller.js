@@ -53,12 +53,13 @@ const getAllAuctions = async (req, res) => {
 const addBid = async (req, res) => {
     try {
         let { bidder, bid, time, itemId } = req.body
-        console.log(req.body);
         if (!bidder || !bid || !itemId) return res.status(404).json({ status: false, message: 'bidder and item and bid must be provided' })
 
         let item = await Auction.findById(itemId)
         if (!item) return res.status(404).json({ status: false, message: "item was not found" })
 
+        let lastBid = item?.bids[item?.bids?.length - 1]?.bid
+        if (bid <= lastBid) return res.status(400).json({ status: false, message: 'the bid must be greater than the lastbid' })
         item?.bids?.push({ bidder, bid, time })
         await item.save()
 

@@ -10,12 +10,9 @@ import Signup from "./pages/Signup"
 import AuthProvider from "./context/AuthProvider"
 import Login from "./pages/Login"
 import NewAuction from "./pages/NewAuction"
-import { io } from 'socket.io-client'
-import AppProvider, { AppContext } from "./context/AppProvider"
 
 function App() {
 
-  let {isAlertOn, addedAuction } = useContext(AppContext)
   let [isAsideActive, setIsAsideActive] = useState(false)
 
   return (
@@ -24,13 +21,6 @@ function App() {
         <Header setIsAsideActive={setIsAsideActive} isAsideActive={isAsideActive} />
         {isAsideActive && <Aside setIsAsideActive={setIsAsideActive} />}
       </AuthProvider>
-      {
-        isAlertOn && (
-          <div className="alert-box">
-            <h3>{addedAuction}</h3>
-          </div>
-        )
-    }
       <Routes>
         <Route path="/" element={
           <>

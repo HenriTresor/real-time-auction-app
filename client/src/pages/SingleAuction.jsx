@@ -8,7 +8,6 @@ import Breadcrump from '../components/Breadcrump'
 import Loading from '../components/Loading'
 
 
-
 const SingleAuction = () => {
 
     let { id } = useParams()
@@ -21,6 +20,7 @@ const SingleAuction = () => {
     let { currentUser, isLoggedIn } = useContext(AuthData)
     let [isLoading, setIsLoading] = useState(true)
     let [seller, setSeller] = useState({})
+    let [notfound, setnotfound] = useState(false)
 
     const fetchAuction = async () => {
         try {
@@ -31,6 +31,9 @@ const SingleAuction = () => {
             })
 
             const data = await res.json()
+            if (!data.status) {
+                setnotfound(true)
+            }
             setSeller(data?.auction?.seller)
             setIsLoading(false)
             setThisAuction(data?.auction);
@@ -47,13 +50,11 @@ const SingleAuction = () => {
         setBids(thisAuction?._doc?.bids)
     }, [thisAuction])
 
-
     const sendBidToserver = async (e) => {
 
         e.preventDefault()
 
-        if (bid > bids[bids?.length - 1]?.bid && bid >= thisAuction?._doc?.startBid) {
-            console.log(bid);
+        if (bid >= thisAuction?._doc?.startBid) {
             try {
                 let body = {
                     bidder: currentUser?._id,
@@ -62,7 +63,6 @@ const SingleAuction = () => {
                     itemId: thisAuction?._doc?._id
                 }
 
-                console.log(body);
                 const res = await fetch(`${serverLink}/auctions/bid`, {
                     method: 'POST',
                     headers: {
@@ -71,7 +71,6 @@ const SingleAuction = () => {
                     body: JSON.stringify(body)
                 })
                 const data = await res.json()
-
                 setErrMsg(data.message)
                 if (!data.status) {
                     setIsErr(true)
@@ -88,10 +87,20 @@ const SingleAuction = () => {
         }
     }
 
+
     if (isLoading) {
         return (
             <Container className='body'>
                 <Loading />
+            </Container>
+        )
+    }
+
+
+    if (notfound) {
+        return (
+            <Container className='body'>
+                <h3>Auction not found</h3>
             </Container>
         )
     }
@@ -169,7 +178,6 @@ const SingleAuction = () => {
                 >
                     {
                         bids?.map(bid => {
-                            console.log(bid);
                             return (
                                 (
                                     <Paper

@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AuthData } from '../context/AuthProvider'
 import { serverLink } from '../helpers/server'
 import { AuctionData } from '../context/Auctions'
-import { AppContext } from '../context/AppProvider'
 import { Link } from 'react-router-dom'
 import Breadcrump from '../components/Breadcrump'
 
@@ -14,7 +13,6 @@ const NewAuction = () => {
     const [isErr, setIsErr] = useState(false)
     const [errMsg, setErrMsg] = useState(null)
 
-    let { socket } = useContext(AppContext)
     let [inputValues, setInputValues] = useState({
         itemName: '',
         description: '',
@@ -52,11 +50,6 @@ const NewAuction = () => {
 
                 setIsErr(false)
                 setErrMsg(data.message)
-
-                socket.current.emit('add-auction', {
-                    ...inputValues,
-                    seller: currentUser._id
-                })
                 if (!data.status) {
                     setIsErr(true)
                     setErrMsg(data.message)

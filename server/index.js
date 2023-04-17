@@ -72,6 +72,7 @@ io.on('connection', socket => {
     })
 
     socket.on('add-bid', bid => {
+        // console.log(bid);
         socket.emit('bid-added', bid)
     })
     socket.on("disconnect", () => console.log(`${socket.id} disconnected`))
