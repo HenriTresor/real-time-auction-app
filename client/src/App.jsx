@@ -10,6 +10,7 @@ import Signup from "./pages/Signup"
 import AuthProvider from "./context/AuthProvider"
 import Login from "./pages/Login"
 import NewAuction from "./pages/NewAuction"
+import Profile from "./pages/Profile"
 
 function App() {
 
@@ -67,6 +68,16 @@ function App() {
           <AuthProvider>
             <AuctionContext>
               <NewAuction />
+            </AuctionContext>
+          </AuthProvider>
+
+        } />
+
+        <Route path="/profile/:userId" element={ 
+
+          <AuthProvider>
+            <AuctionContext>
+              <Profile />
             </AuctionContext>
           </AuthProvider>
 

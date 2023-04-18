@@ -16,7 +16,7 @@ const Dashboard = () => {
                 isLoggedIn ? (
                     <>
                         <Breadcrump>
-                            <Link to='#'>
+                            <Link to='/'>
                             Home
                             </Link>
                         </Breadcrump>
@@ -50,16 +50,20 @@ const Dashboard = () => {
                                         <ChevronRight />
                                     </Paper>
                                 </Link>
-                                <Paper
-                                    className='paper'
-                                    sx={{
-                                        padding: 1
-                                    }}
-                                    elevation={4}>
-                                    <h4>view your auctions</h4>
+                                <Link
+                                    to={`/profile/${currentUser?._id}`}
+                                >
+                                
+                                    <Paper
+                                        className='paper'
+                                        sx={{
+                                            padding: 1
+                                        }}
+                                        elevation={4}>
+                                        <h4>view your auctions</h4>
 
-                                    <ChevronRight />
-                                </Paper>
+                                        <ChevronRight />
+                                    </Paper></Link>
                                 <Paper
                                     className='paper'
                                     sx={{

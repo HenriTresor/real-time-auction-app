@@ -8,6 +8,9 @@ import Loading from '../components/Loading'
 
 const AvailableAuctions = () => {
 
+    useEffect(() => {
+        document.title = 'auctions'
+    },[])
     let { allAuctions, sellers, isLoading, setIsLoading } = useContext(AuctionData)
 
 

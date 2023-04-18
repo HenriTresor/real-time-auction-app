@@ -22,8 +22,11 @@ const SingleAuction = () => {
     let [seller, setSeller] = useState({})
     let [notfound, setnotfound] = useState(false)
 
+    useEffect(()=>{
+        document.title = `${thisAuction?._doc?.itemName} sold by ${seller?.lastName}`
+    },[thisAuction])
     const fetchAuction = async () => {
-        try {
+    try {
 
             setIsLoading(true)
             const res = await fetch(`${serverLink}/auctions/${id}`, {

@@ -112,6 +112,11 @@ a{
   margin: 0 10px ;
 }
 
+p{
+  margin: 0.3em 0;
+  font-size: medium;
+}
+
 .paper.auction{
   margin: 1.4em auto;
 }
@@ -194,7 +199,7 @@ input[type='datetime-local']{
 
 .loader{
   width: 100%;
-  height: 100dvh;
+  height: 100%;
   display: grid;
   place-content: center;
 }

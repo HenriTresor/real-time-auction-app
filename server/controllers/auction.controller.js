@@ -35,14 +35,14 @@ const getAllAuctions = async (req, res) => {
     try {
 
         let allAuctions = await Auction.find().sort({ createdAt: 1 })
-        for (let i = 0; i < allAuctions.length; i++){
+        for (let i = 0; i < allAuctions.length; i++) {
             let seller = await User.findById(allAuctions[i]?.seller);
 
             allAuctions[i] = {
                 ...allAuctions[i],
                 seller
             }
-       }
+        }
         return res.status(200).json({ status: true, message: 'auctions found', auctions: allAuctions })
     } catch (err) {
         console.log('error getting all auctions', err.message);
@@ -86,12 +86,12 @@ const getAuction = async (req, res) => {
         let auction = await Auction.findById(id)
         for (let i = 0; i < auction?.bids.length; i++) {
             let bidder = await getBidders(auction?.bids[i]?.bidder);
-            auction.bids[i] = { ...auction?.bids[i], bidder, bid: auction?.bids[i].bid}
+            auction.bids[i] = { ...auction?.bids[i], bidder, bid: auction?.bids[i].bid }
         }
 
         let seller = await getSeller(auction?.seller)
         if (!auction) return res.status(404).json({ status: false, message: 'auction was not found' })
-        return res.status(200).json({ status: true, message: 'auction was found', auction : { ...auction, seller : seller}})
+        return res.status(200).json({ status: true, message: 'auction was found', auction: { ...auction, seller: seller } })
 
     } catch (err) {
 
@@ -118,10 +118,26 @@ const getBiddersBids = async (req, res) => {
     }
 }
 
+
+const getUsersAuctions = async (req, res) => {
+    try {
+        let { id } = req.params()
+        if (!id) return res.status(404).json({ status: false, message: 'id is required ' })
+        let user = await User.findById(id)
+        if (!user) return res.status(400).json({ status: false, message: 'user is not found' })
+
+        let auctions = await Auction.findById({ seller: user._id })
+        res.status(200).json({ status: true, auctions })
+    } catch (err) {
+        console.log('error getting user\'s auctions ', err.message);
+        res.status(500).json({ status: false, message: 'server error' })
+    }
+}
 module.exports = {
     addAuction,
     addBid,
     getAuction,
     getAllAuctions,
-    getBiddersBids
+    getBiddersBids,
+    getUsersAuctions
 }
