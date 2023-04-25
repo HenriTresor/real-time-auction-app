@@ -1,0 +1,9 @@
+*{
+  scroll-behavior: smooth;
+  font-family: Roboto;
+}
+
+a{
+  text-decoration: none;
+  color: grey;
+}
