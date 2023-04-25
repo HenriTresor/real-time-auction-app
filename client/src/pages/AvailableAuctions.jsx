@@ -2,6 +2,7 @@ import { Container, Card, Button, Typography, Box, Stack, Grid } from '@mui/mate
 import React, { useEffect, useState } from 'react'
 import useFetch from '../hooks/useFetch'
 import { auctionsLink } from '../utils/server.links'
+import Loading from '../components/Loading'
 import { 
     NotificationAddRounded,
     FlagCircleRounded
@@ -10,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 
 const AvailableAuctions = () => {
     const navigate= useNavigate()
-    const { data } = useFetch(`${auctionsLink}`)
+    const { data, loading } = useFetch(`${auctionsLink}`)
     const [auctions, setAuctions] = useState([])
 
     useEffect(() => {
@@ -36,7 +37,9 @@ const AvailableAuctions = () => {
                 container
                 spacing={1}
                 >
-                    
+                    {
+                        loading && <Loading />
+                    }
                 {
                     auctions?.map(auction => {
                         let startDate = auction?.startDate
