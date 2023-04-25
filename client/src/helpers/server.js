@@ -1,1 +1,0 @@
-export const serverLink = 'http://localhost:8080/api/v1'
