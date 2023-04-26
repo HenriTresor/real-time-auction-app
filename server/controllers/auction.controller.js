@@ -1,6 +1,5 @@
-import { checkUser } from "../funtions/user.functions.js"
 import Auction from "../models/Auctions.model.js"
-import User from "../models/User.model.js"
+import User from "../models/user.model.js"
 import { auctionValidObject } from "../validators/joiAuction.js"
 
 export const getAllAuctions = async (req, res, next) => {
@@ -45,7 +44,7 @@ export const createAuction = async (req, res, next) => {
         })
 
         await newAuction.save()
-        return res.status(201).json({ status: true, message: 'new auction saved!',auction:newAuction })
+        return res.status(201).json({ status: true, message: 'new auction saved!', auction: newAuction })
     } catch (error) {
         console.log(error.message)
         let err = new Error(error.message)

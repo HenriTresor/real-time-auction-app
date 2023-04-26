@@ -1,6 +1,6 @@
 import Joi from "joi"
 import { validateSchema } from "../validators/joiUser.js"
-import User from "../models/User.model.js"
+import User from "../models/user.model.js"
 import { createToken } from "../utils/jwt.js"
 import { checkUser } from "../funtions/user.functions.js"
 import _ from 'lodash'

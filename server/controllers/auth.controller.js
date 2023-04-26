@@ -1,4 +1,4 @@
-import User from "../models/User.model.js"
+import User from "../models/user.model.js"
 import bcrypt from 'bcrypt'
 import { createToken } from "../utils/jwt.js"
 import _ from 'lodash'
