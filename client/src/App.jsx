@@ -17,6 +17,7 @@ import AvailableAuctions from './pages/AvailableAuctions'
 import NewAuction from './pages/NewAuction'
 import SingleAuction from './pages/SingleAuction'
 import { io } from 'socket.io-client'
+import addNotification from 'react-push-notification'
 
 
 const App = () => {
@@ -25,22 +26,14 @@ const App = () => {
   const { globalSnackBarMsg, setGlobalSnackBarMsg, token, socket } = useContext(AppData)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (socket.current) {
-      socket.current.on('auction added', msg => {
-        console.log(msg);
-        setGlobalSnackBarMsg(msg)
-      })
-    }
-  },[socket.current])
   const getUser = async () => {
 
     try {
       const res = await fetch(`${rootLink}/users/me`, {
         headers: {
-          'authorization':`Bearer ${token}`
+          'authorization': `Bearer ${token}`
         },
-        method:'GET'
+        method: 'GET'
       })
       const data = await res.json()
       setCurrentUser(data?.user)
@@ -58,14 +51,35 @@ const App = () => {
     } else {
       navigate('/login')
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     if (isLoggedIn) {
       socket.current = io(`${rootLink}`)
     }
-  },[isLoggedIn])
+  }, [isLoggedIn])
+
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on('auction added', res => {
+        setGlobalSnackBarMsg(res.msg)
+        console.log(res.auction);
+        addNotification({
+          title: 'new auction - Bidify',
+          message: res.message,
+          duration: 5000,
+          native: true,
+          icon: '',
+          onClick: function () {
+            navigate(`/auctions/${res?.auction?.auction?._id}`)
+          }
+          
+        })
+      })
+  }
+},[socket.current])
   return (
     <>
       <Snackbar
@@ -81,11 +95,12 @@ const App = () => {
             marginTop: 12
           }}
           startIcon={<ChevronLeftOutlined />}
-          onClick={()=>navigate(-1)}
+          onClick={() => navigate(-1)}
         >
           back
         </Button>
-     )}
+
+      )}
       <Routes>
         <Route exact />
         <Route exact path='/' element={<Dashboard />} />

@@ -53,20 +53,24 @@ const NewAuction = () => {
     const handleSubmit = async () => {
         try {
             dispatch({ type: 'FETCHING' })
-            const res = await fetch(`${auctionsLink}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ ...inputValues, endDate: endDate, startDate: startDate })
-            })
+               const res = await fetch (`${auctionsLink}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ...inputValues, endDate: endDate, startDate: startDate, seller: currentUser?._id })
+                })
+                  
+                     const data = await res.json()
+            
+            if (data.status) {
+                socket.current.emit('add auction', {
+                    ...inputValues, endDate: endDate, startDate: startDate, auction: data?.auction
+                })
+                    }
+                    setIsOpen(true)
+                    dispatch({ type: 'DONE_FETCHING', payload: data.message })
 
-            const data = await res.json()
-            socket.current.emit('add auction', {
-                ...inputValues, endDate: endDate, startDate: startDate
-            })
-            setIsOpen(true)
-            dispatch({ type: 'DONE_FETCHING', payload: data.message })
         } catch (err) {
             setIsOpen(true)
             dispatch({ type: 'ERROR', payload: err.message })
