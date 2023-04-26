@@ -15,7 +15,7 @@ import addNotification from 'react-push-notification'
 import Loading from './components/Loading'
 
 
-const Login = lazy(() => import('./pages/login'))
+const Login = lazy(() => import('./pages/Login'))
 const Dashboard = lazy(() => import('./pages/Dashboard'))
 const SingleAuction = lazy(() => import('./pages/SingleAuction'))
 const NewAuction = lazy(() => import('./pages/NewAuction'))
