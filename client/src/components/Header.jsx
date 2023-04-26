@@ -69,7 +69,7 @@ const Header = () => {
                             setIsLoggedIn(false)
                             setCurrentUser(null)
                             localStorage.removeItem('access_token')
-                            location.assign('/#/login')
+                            location.assign('/')
                         }}
                     >
                         Logout
