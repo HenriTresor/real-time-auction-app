@@ -45,7 +45,7 @@ export const createAuction = async (req, res, next) => {
         })
 
         await newAuction.save()
-        return res.status(201).json({ status: false, message: 'new auction saved!' })
+        return res.status(201).json({ status: true, message: 'new auction saved!',auction:newAuction })
     } catch (error) {
         console.log(error.message)
         let err = new Error(error.message)

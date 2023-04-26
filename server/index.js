@@ -62,8 +62,9 @@ io.on('connection', socket => {
     })
 
     socket.on('add auction', auction => {
+        console.log(auction);
         let message = `a new auction '${auction?.itemName}' added, go check it out!`
-        socket.broadcast.emit(`auction added`, message)
+        socket.emit(`auction added`, {message, auction})
     })
 
     socket.on('add bid', bid => {
